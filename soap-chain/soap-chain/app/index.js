@@ -36,9 +36,24 @@ app.post('/mine', (req, res) => {
     res.redirect('/blocks');
 })
 
+/*
+Url for getting transactions
+*/
 app.get('/transactions', (req, res) => {
     res.json(tp.transactions);
 })
+
+/*
+Url for transacting
+*/
+
+app.post('/transact', (req, res) => {
+    console.log('posted a transaction')
+    const {recipient, amount } = req.body;
+    const transaction = wallet.createTransaction(recipient, amount, tp);
+    res.redirect('/transactions');
+})
+
 /*
 Stand up application and opens up server for new members to join
 */ 
