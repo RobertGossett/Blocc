@@ -1,11 +1,12 @@
 const Transaction = require('../wallet/transaction');
+
 class TransactionPool {
     constructor() {
         this.transactions = [];
     };
 
     updateOrAddTransaction(transaction) {
-        let transactionWithId = this.transactions.find(t => transaction.id);
+        let transactionWithId = this.transactions.find(t => t.id === transaction.id);
 
         if(transactionWithId) {
             this.transactions[this.transactions.indexOf(transactionWithId)] = transaction;
@@ -23,7 +24,6 @@ class TransactionPool {
     validTransactions() {
         return this.transactions.filter(transaction => {
             const outputTotal = transaction.outputs.reduce((total, output) => {
-                
                 return total + output.amount;
             }, 0);
 

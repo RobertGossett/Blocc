@@ -74,13 +74,9 @@ Adjusts the difficulty of mining the next block
             return 1;
         }
         else{
-        // difficulty = lastBlock.timestamp + MINE_RATE > currentTime ? difficulty + 1 : difficulty - 1;
-        difficulty = MINE_RATE > currentTime - lastBlock.timestamp ? difficulty + 1 : difficulty - 1;
-        // console.log( MINE_RATE < (currentTime - lastBlock.timestamp));
-        // console.log("difficulty: " + difficulty, 
-        // "currentTime - lastBlock.timestamp: ", currentTime - lastBlock.timestamp,
-        // "current time: " + currentTime, 
-        // "last block's timestamp: " + lastBlock.timestamp);
+        
+            difficulty = lastBlock.timestamp + MINE_RATE > currentTime ?
+            difficulty + 1 : difficulty - 1;
         return difficulty;
         }
         

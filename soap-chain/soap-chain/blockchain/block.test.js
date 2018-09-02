@@ -22,11 +22,13 @@ describe('Block', () => {
     });
 
     it('lowers the difficulty for slowly mined blocks', () => {
-        expect(Block.adjustDifficulty(block2, block2.timeStamp+360000)).toEqual(block2.difficulty - 1);
-    });
-
-    it('raises the difficulty for quickly mined block', () => {
-        expect(Block.adjustDifficulty(block2, block2.timeStamp+1)).toEqual(block2.difficulty + 1);
-    });
+        expect(Block.adjustDifficulty(block, block.timestamp+360000))
+          .toEqual(block.difficulty-1);
+      });
+    
+      it('raises the difficulty for quickly mined blocks', () => {
+        expect(Block.adjustDifficulty(block, block.timestamp+1))
+          .toEqual(block.difficulty+1);
+      });
     
 });

@@ -27,8 +27,10 @@ class Wallet {
             let transaction = transactionPool.existingTransaction(this.publicKey);
             if(transaction) {
                 transaction.update(this, recipient, amount);
+                console.log("updating existing transaction");
             }
             else {
+                console.log("creating a new transaction");
                 transaction = Transaction.newTransaction(this, recipient, amount);
                 transactionPool.updateOrAddTransaction(transaction);
             }

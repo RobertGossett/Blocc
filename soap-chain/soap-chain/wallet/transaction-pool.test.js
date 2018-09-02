@@ -28,24 +28,23 @@ describe('TransactionPool', () => {
         let validTransactions;
 
         beforeEach(() => {
-
-            wallet = new Wallet();
-            tp = new TransactionPool();
-            transaction = wallet.createTransaction('r4nd-4dr355', 30, tp);
             validTransactions = [...tp.transactions];
-            validTransactions.push(transaction);
-
-            for(let i = 0; i<1; i++) {
+            for(let i = 0; i<4; i++) {
                 wallet = new Wallet();
                 transaction = wallet.createTransaction('r4nd-4dr355', 30, tp);
+                console.log(JSON.stringify(tp.transactions));
                 if(i%2 === 0){
-                    console.log('foobar');
+                    // console.log("Invalid loop");
                     transaction.input.amount = 99999;
                 }
                 else{
+                    // console.log("valid loop");
                     validTransactions.push(transaction);
                 }
             }
+            
+            // console.log(`valid transactions ${validTransactions.length}`);
+            // console.log(`pool transacitons ${tp.transactions.length}`);
         });
 
         it('shows a difference between valid and corrupt transactions', () => {
