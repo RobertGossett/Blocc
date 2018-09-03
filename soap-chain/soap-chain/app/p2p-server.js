@@ -3,7 +3,8 @@ const P2P_PORT = process.env.P2P_PORT || 5001;
 const peers = process.env.PEERS ? process.env.PEERS.split(',') : [];
 const MESSAGE_TYPE = {
     chain: 'CHAIN',
-    transaction: 'TRANSACTION'
+    transaction: 'TRANSACTION',
+    clear_transactions: 'CLEAR_TRANSACTIONS'
 }
 
 // HTTP_PORT=3003 P2P_PORT=5003 PEERS=ws://localhost:5001,ws://localhost:5002 npm run dev
@@ -71,6 +72,9 @@ Message handler for replacing this chain with current chain or transacting
                 case MESSAGE_TYPE.transaction:
                     this.transactionPool.updateOrAddTransaction(data.transaction);
                     break;
+                case MESSAGE_TYPE.clear_transactions:
+                    this.transactionPool.clear();
+                    break;
                 default:
                     console.log('Error, unrecognized commands in message handler p2p')
             }
@@ -107,6 +111,12 @@ Broadcasts transaction
 */ 
     broadcastTransaction(transaction) {
         this.sockets.forEach(socket => this.sendTransaction(socket, transaction));
+    }
+
+    broadcastClearTransactions() {
+        this.sockets.forEach(socket => socket.send(JSON.stringify({
+            type: MESSAGE_TYPE.clear_transactions
+        })));
     }
 
 
